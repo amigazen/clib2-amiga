@@ -32,7 +32,7 @@
 #INCLUDE_DIR = V:include
 #INCLUDE_DIR = include:
 # Modified to include the project include directory first and then the system includes in the ToolKit standard location
-INCLUDE_DIR = include include:
+INCLUDE_DIR = include:
 
 
 ##############################################################################
@@ -61,6 +61,7 @@ CFLAGS = \
 	stringmerge \
 	errorrexx \
 	math=ieee \
+	idir=include \
 	$(PROFILE) $(OPTIMIZE) $(CODE) $(DATA) $(CPU) \
 	$(DEBUG) \
 	define=__C_MACROS__
@@ -855,7 +856,7 @@ LIB_AMIGA_OBJS = \
 ##############################################################################
 
 #all: setup c.lib unix.lib math.lib net.lib debug.lib amiga.lib startup.o cleanup
-all: c.lib unix.lib math.lib net.lib debug.lib amiga.lib startup.o
+all: c.lib x.lib math.lib net.lib debug.lib amiga.lib startup.o
 
 clean:
 	-delete \#?.o \#?.mo \#?.no \#?.uo \#?.lib \#?.map
@@ -887,7 +888,7 @@ version:
 	bumprev 1 m881.lib
 	bumprev 1 net.lib
 	bumprev 1 stack.lib
-	bumprev 1 unix.lib
+	bumprev 1 x.lib
 
 ##############################################################################
 
@@ -968,7 +969,7 @@ c.lib : c1.lib c2.lib c3.lib c4.lib
 	@copy buf=0 clone T:$@ $@
 	@delete >NIL: T:$@
 
-unix.lib : $(LIB_UNIX_OBJS)
+x.lib : $(LIB_UNIX_OBJS)
 	@-delete >NIL: $@ T:$@
 	oml T:$@ add $(LIB_UNIX_OBJS)
 	@copy buf=0 clone T:$@ $@
