@@ -30,7 +30,10 @@
 # header files are stored. On my system, that's "V:include", but you might
 # get lucky with "sc:include" instead, which is the default for SAS/C.
 #INCLUDE_DIR = V:include
-INCLUDE_DIR = sc:include
+#INCLUDE_DIR = include:
+# Modified to include the project include directory first and then the system includes in the ToolKit standard location
+INCLUDE_DIR = include include:
+
 
 ##############################################################################
 
@@ -43,7 +46,8 @@ INCLUDE_DIR = sc:include
 #PROFILE	= profile
  DATA		= data=faronly
 #CODE		= code=far
- CPU		= cpu=030
+#CPU		= cpu=030
+CPU		= cpu=020
 
 ##############################################################################
 
@@ -850,20 +854,21 @@ LIB_AMIGA_OBJS = \
 
 ##############################################################################
 
-all: setup c.lib unix.lib math.lib net.lib debug.lib amiga.lib startup.o cleanup
+#all: setup c.lib unix.lib math.lib net.lib debug.lib amiga.lib startup.o cleanup
+all: c.lib unix.lib math.lib net.lib debug.lib amiga.lib startup.o
 
 clean:
 	-delete \#?.o \#?.mo \#?.no \#?.uo \#?.lib \#?.map
 
 ##############################################################################
+# These targets are disabled because they will break your ToolKit SDK
+#setup:
+#	@echo "Setting up include: assignment"
+#	@assign include: include $(INCLUDE_DIR)
 
-setup:
-	@echo "Setting up include: assignment"
-	@assign include: include $(INCLUDE_DIR)
-
-cleanup:
-	@echo "Cleaning up include: assignment"
-	@assign include: sc:include
+#cleanup:
+#	@echo "Cleaning up include: assignment"
+#	@assign include: sc:include
 
 ##############################################################################
 
